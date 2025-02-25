@@ -23,3 +23,15 @@ body {
 input {
   color: black;
 }
+
+/* Hide number input buttons in Webkit */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide number input buttons in Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}

@@ -2,7 +2,7 @@
 
 import { ChangeEvent, FormEvent, useState } from "react";
 import { RollHistoryItem } from "./model";
-import HistoryItem from "./historyItem";
+import HistoryItem from "./components/historyItem";
 
 export default function Home() {
   const [numDice, setNumDice] = useState(1);
@@ -27,26 +27,41 @@ export default function Home() {
 
   function roll(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(`rolling ${numDice} dice`);
-    calculateRolls();
+
+    if (numDice) {
+      calculateRolls();
+    }
   }
 
   return (
-    <main>
-      <form onSubmit={roll}>
+    <main className="mt-10 max-w-screen px-2">
+      <form
+        onSubmit={roll}
+        className="max-w-screen-sm mx-auto flex gap-2 items-center"
+      >
         <input
+          className="py-1 px-2"
+          pattern="\d*"
+          step={1}
+          min={1}
           type="number"
           name="numDice"
           id="numDice"
           onChange={handleNumDiceChange}
           value={numDice}
         />
-        <button type="submit">roll</button>
+        <div>
+          <button className="border px-4 py-1 inline-block" type="submit">
+            Roll
+          </button>
+        </div>
       </form>
 
-      {rollHistory.map((roll, index) => (
-        <HistoryItem key={index} roll={roll} />
-      ))}
+      <div className="max-w-screen-sm mx-auto mt-10 grid gap-4">
+        {rollHistory.map((roll, index) => (
+          <HistoryItem key={index} roll={roll} />
+        ))}
+      </div>
     </main>
   );
 }
